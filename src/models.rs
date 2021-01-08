@@ -9,7 +9,7 @@ pub struct User {
   pub id: i32,
   pub username: String,
 }
-
+// NOTE: Add bookmark for last page: 123
 pub fn create_user(conn: &SqliteConnection, username: &str) -> Result<User> {
   conn.transaction(|| {
     diesel::insert_into(users::table)
