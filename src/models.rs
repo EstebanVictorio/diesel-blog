@@ -9,7 +9,7 @@ pub struct User {
   pub id: i32,
   pub username: String,
 }
-// NOTE: Add bookmark for last page: 123
+// NOTE: Add bookmark for last page: 124
 pub fn create_user(conn: &SqliteConnection, username: &str) -> Result<User> {
   conn.transaction(|| {
     diesel::insert_into(users::table)
@@ -22,4 +22,9 @@ pub fn create_user(conn: &SqliteConnection, username: &str) -> Result<User> {
       .first(conn)
       .map_err(Into::into)
   })
+}
+
+enum UserKey<'a> {
+  Username(&'a str), // NOTE: added lifetime, the Username value's lifetime lives as long as the struct's lifetime
+  ID(i32),
 }
